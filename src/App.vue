@@ -33,7 +33,7 @@ interface ApiPayload {
     temperature_2m: string;
     time: string;
     windspeed_10m: string;
-  }[];
+  };
 }
 
 interface HourData {
