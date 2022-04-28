@@ -1,20 +1,22 @@
 <template>
-  <main class="py-6 px-2 mx-auto max-w-lg">
-    <header class="text-center mb-8">
-      <h1 class="text-3xl font-bold mb-4">Hourly Weather Forecast</h1>
+  <main class="py-6 px-2 mx-auto max-w-xl text-center">
+    <header class="mb-14">
+      <h1 class="text-4xl font-bold mb-4">Hourly Weather Forecast</h1>
       <p class="text-xl">
         Stockholm, {{ formatDate(new Date(state.date), 'MMMM do, yyyy') }}
       </p>
     </header>
 
-    <div class="grid grid-cols-1 gap-2">
-      <WeatherCard
-        v-for="item in state.hoursData"
-        :time="formatDate(new Date(item.time), 'h a')"
-        :temperature="item.temperature"
-        :cloudcover="item.cloudcover"
-      />
-    </div>
+    <ol class="inline-flex flex-col gap-2">
+      <li v-for="item in state.hoursData" class="grow">
+        <WeatherCard
+          :date="new Date(item.time)"
+          :temperature="item.temperature"
+          :cloudcover="item.cloudcover"
+          class="w-full"
+        />
+      </li>
+    </ol>
   </main>
 </template>
 
