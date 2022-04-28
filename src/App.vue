@@ -1,24 +1,28 @@
 <template>
-  <h1>Weather forecast</h1>
-  <p>Stockholm</p>
-  <p>{{ formatDate(new Date(state.date), 'MMMM do, yyyy') }}</p>
+  <main class="py-6 px-2 mx-auto max-w-lg">
+    <header class="text-center mb-8">
+      <h1 class="text-3xl font-bold mb-4">Hourly Weather Forecast</h1>
+      <p class="text-xl">
+        Stockholm, {{ formatDate(new Date(state.date), 'MMMM do, yyyy') }}
+      </p>
+    </header>
 
-  <div>
-    <article
-      v-for="item in state.hoursData"
-      :class="['bg-slate-100', 'mb-2', 'p-2']"
-    >
-      <p>Time: {{ formatDate(new Date(item.time), 'HH:00') }}</p>
-      <p>Temperature: {{ item.temperature }}{{ state.units?.temperature }}</p>
-      <p>Clouds: {{ item.cloudcover }}{{ state.units?.cloudcover }}</p>
-    </article>
-  </div>
+    <div class="grid grid-cols-1 gap-2">
+      <WeatherCard
+        v-for="item in state.hoursData"
+        :time="formatDate(new Date(item.time), 'h a')"
+        :temperature="item.temperature"
+        :cloudcover="item.cloudcover"
+      />
+    </div>
+  </main>
 </template>
 
 <script lang="ts" setup>
 import axios from 'axios';
 import { onMounted, reactive } from 'vue';
 import formatDate from 'date-fns/format';
+import WeatherCard from './components/WeatherCard.vue';
 
 interface ApiPayload {
   hourly: {
@@ -57,10 +61,13 @@ const state = reactive<State>({
 
 onMounted(async () => {
   const url =
-    'https://api.open-meteo.com/v1/forecast?latitude=59.3328&longitude=18.0645&hourly=temperature_2m,cloudcover,windspeed_10m';
+    'https://api.open-meteo.com/v1/forecast?latitude=59.3328&longitude=18.0645&hourly=temperature_2m,cloudcover';
 
   const response = await axios(url);
   const data: ApiPayload = response.data;
+
+  console.log(data);
+
   state.hoursData = Array.from(Array(24).keys()).map(i => {
     const {
       temperature_2m: temperatures,
