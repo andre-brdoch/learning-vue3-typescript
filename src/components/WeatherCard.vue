@@ -35,6 +35,7 @@ interface Props {
   cloudcover: number;
   temperatureUnit?: string;
 }
+
 const props = withDefaults(defineProps<Props>(), {
   temperatureUnit: '°C',
 });
