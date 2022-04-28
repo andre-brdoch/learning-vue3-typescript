@@ -1,16 +1,22 @@
 <template>
   <article
-    class="bg-slate-200 py-5 px-3 rounded-md inline-grid grid-cols-2 items-center justify-center"
+    class="bg-slate-200 py-3 px-3 rounded-md inline-grid grid-cols-2 items-center justify-center"
   >
     <p class="font-semibold text-sm text-left">
-      {{ formatDate(date, 'h a') }}
+      <time :datetime="formatDate(date, 'HH:00')">
+        {{ formatDate(date, 'h a') }}
+      </time>
     </p>
 
     <div class="flex items-center justify-end gap-3">
       <p class="text-3xl text-right font-semibold text-blue-800">
         {{ temperature.toFixed(0) }}{{ temperatureUnit }}
       </p>
-      <Icon class="text-gray-600" :size="26" />
+      <Icon
+        class="text-gray-600"
+        :size="26"
+        :title="`${cloudcover}% cloud coverage`"
+      />
     </div>
   </article>
 </template>
