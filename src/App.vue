@@ -10,7 +10,7 @@
       </p>
     </header>
 
-    <article>
+    <article class="mb-8">
       <WeatherData #default="{ weatherByHours }">
         <ol class="inline-flex flex-col gap-2">
           <li v-for="hourlyWeater in weatherByHours" class="grow">
@@ -19,6 +19,15 @@
         </ol>
       </WeatherData>
     </article>
+
+    <footer>
+      Data retrieved via
+      <a
+        class="text-blue-500 hover:text-blue-400"
+        href="https://open-meteo.com/en"
+        >Open-Meteo</a
+      >.
+    </footer>
   </main>
 </template>
 
