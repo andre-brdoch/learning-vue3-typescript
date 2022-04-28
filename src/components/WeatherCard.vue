@@ -28,11 +28,9 @@ interface Props {
   temperature: number;
   cloudcover: number;
   temperatureUnit?: string;
-  cloudcoverUnit?: string;
 }
 const props = withDefaults(defineProps<Props>(), {
   temperatureUnit: '°C',
-  cloudcoverUnit: '%',
 });
 
 const isNight = computed(

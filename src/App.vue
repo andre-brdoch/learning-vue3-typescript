@@ -10,7 +10,7 @@
     <ol class="inline-flex flex-col gap-2">
       <li v-for="item in state.hoursData" class="grow">
         <WeatherCard
-          :date="new Date(item.time)"
+          :date="item.date"
           :temperature="item.temperature"
           :cloudcover="item.cloudcover"
           class="w-full"
@@ -42,11 +42,11 @@ interface ApiPayload {
 interface HourData {
   temperature: number;
   cloudcover: number;
-  time: string;
+  date: Date;
 }
 
 type Units = {
-  [U in keyof HourData]: string;
+  [U in keyof HourData]?: string;
 };
 
 interface State {
@@ -74,19 +74,14 @@ onMounted(async () => {
     const {
       temperature_2m: temperatures,
       cloudcover: cloudcovers,
-      time: times,
+      time: dates,
     } = data.hourly;
     return {
       temperature: temperatures[i],
       cloudcover: cloudcovers[i],
-      time: times[i],
+      date: new Date(dates[i]),
     };
   });
-  const {
-    temperature_2m: temperature,
-    cloudcover: cloudcover,
-    time: time,
-  } = data.hourly_units;
-  state.units = { temperature, cloudcover, time };
+  state.units = { temperature: data.hourly_units.temperature_2m };
 });
 </script>
