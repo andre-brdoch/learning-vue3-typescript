@@ -1,6 +1,6 @@
 <template>
   <article
-    class="bg-slate-200 py-3 px-3 rounded-md inline-grid grid-cols-2 items-center justify-center"
+    class="bg-slate-200 py-3 px-3 rounded-md inline-grid grid-cols-2 gap-4 items-center justify-center"
   >
     <p class="font-semibold text-sm text-left">
       <time :datetime="formatDate(date, 'HH:00')">
@@ -10,7 +10,7 @@
 
     <div class="flex items-center justify-end gap-3">
       <p class="text-3xl text-right font-semibold text-blue-800">
-        {{ temperature.toFixed(0) }}{{ temperatureUnit }}
+        {{ temperature.toFixed(0) }}°C
       </p>
       <Icon
         class="text-gray-600"
@@ -33,12 +33,9 @@ interface Props {
   date: Date;
   temperature: number;
   cloudcover: number;
-  temperatureUnit?: string;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  temperatureUnit: '°C',
-});
+const props = defineProps<Props>();
 
 const isNight = computed(
   () => props.date.getHours() >= 21 || props.date.getHours() < 9

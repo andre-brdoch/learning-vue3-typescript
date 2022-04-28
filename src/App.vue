@@ -1,5 +1,5 @@
 <template>
-  <main class="py-6 px-2 mx-auto max-w-xl text-center">
+  <main class="py-6 px-2 mx-auto max-w-xl text-left">
     <header class="mb-14">
       <h1 class="text-4xl font-bold mb-4">Hourly Weather Forecast</h1>
       <p class="text-xl">
@@ -13,13 +13,8 @@
     <article>
       <WeatherData #default="{ weatherByHours }">
         <ol class="inline-flex flex-col gap-2">
-          <li v-for="item in weatherByHours" class="grow">
-            <WeatherCard
-              :date="item.date"
-              :temperature="item.temperature"
-              :cloudcover="item.cloudcover"
-              class="w-full"
-            />
+          <li v-for="hourlyWeater in weatherByHours" class="grow">
+            <WeatherCard v-bind="hourlyWeater" class="w-full" />
           </li>
         </ol>
       </WeatherData>
