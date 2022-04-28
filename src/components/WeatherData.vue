@@ -48,17 +48,18 @@ const locations = ref<City[]>([
 const selectedCity = ref<CityName>(locations.value[0].name);
 let weatherByHours = ref<WeatherByHour[]>([]);
 
-const coordinates = computed(() => {
+const coordinates = computed((): Coordinates | undefined => {
   const city = locations.value.find(l => l.name === selectedCity.value);
-  if (!city) return {};
+  if (!city) return undefined;
   return { lat: city.lat, long: city.long };
 });
-const weatherEndpoint = computed(() => {
+const weatherEndpoint = computed((): string | undefined => {
+  if (!coordinates.value) return undefined;
   const { lat, long } = coordinates.value;
   return `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&timezone=Europe%2FBerlin&hourly=temperature_2m,cloudcover`;
 });
 const slotData = computed(() => {
-  const { lat, long } = coordinates.value;
+  const { lat, long } = coordinates.value || {};
   return {
     lat,
     long,
@@ -67,7 +68,8 @@ const slotData = computed(() => {
   };
 });
 
-const fetchWeather = async () => {
+const fetchWeather = async (): Promise<void> => {
+  if (!weatherEndpoint.value) return;
   const response = await axios(weatherEndpoint.value);
   const data: ApiPayload = response.data;
 
