@@ -11,10 +11,14 @@
     </header>
 
     <article class="mb-8">
-      <WeatherData #default="{ weatherByHours }">
+      <WeatherData v-slot="{ weatherByHours }">
         <ol class="inline-flex flex-col gap-2">
-          <li v-for="hourlyWeater in weatherByHours" class="grow">
-            <WeatherCard v-bind="hourlyWeater" class="w-full" />
+          <li
+            v-for="hourlyWeather in weatherByHours"
+            :key="hourlyWeather.date"
+            class="grow"
+          >
+            <WeatherCard v-bind="hourlyWeather" class="w-full" />
           </li>
         </ol>
       </WeatherData>

@@ -4,9 +4,9 @@
       <div class="mb-6 inline-block">
         <label for="city-select" class="block mb-2 text-left">City</label>
         <select
-          name="city"
           id="city-select"
           v-model="selectedCity"
+          name="city"
           class="p-2 border"
         >
           <option value="" disabled selected>Select...</option>
